@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { useDispatch  } from "react-redux";
+import { getTodos, sendPost } from "./redux/actions";
+import { Button, Input, Space } from "antd";
 
 function App() {
+  const [post, setPost] = useState("");
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(getTodos({ id: "1" }));
+  };
+
+  const handleSendPost = () => {
+    dispatch(sendPost({body: post}))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div style={{margin: '15px 0'}}>
+        <Button onClick={handleClick}>Загрузить данные</Button>
+      </div>
+      <Space direction="vertical">
+        <Input onChange={(e) => setPost(e.target.value)} />
+        <Button onClick={handleSendPost}>Отправить</Button>
+      </Space>
     </div>
   );
 }
